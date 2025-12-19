@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="750" height="190" xmlns="http://www.w3.org/2000/svg">
+  <rect x="250" y="50" width="250" height="90" rx="10" ry="10" fill="#F1F1F1" stroke="#333333" stroke-width="2"/>
+  <text x="375" y="95" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">INT2INT</text>
+  <circle cx="250" cy="86" r="5" fill="#FF6B6B" stroke="#333333" stroke-width="1"/>
+  <line x1="245" y1="86" x2="215" y2="86" stroke="#333333" stroke-width="1"/>
+  <text x="205" y="86" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">Normal Execution Request - EVENT</text>
+  <text x="265" y="86" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">REQ</text>
+  <circle cx="250" cy="103" r="5" fill="#4ECDC4" stroke="#333333" stroke-width="1"/>
+  <line x1="245" y1="103" x2="215" y2="103" stroke="#333333" stroke-width="1"/>
+  <text x="205" y="103" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">INT</text>
+  <text x="265" y="103" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">IN</text>
+  <circle cx="500" cy="86" r="5" fill="#FF6B6B" stroke="#333333" stroke-width="1"/>
+  <line x1="505" y1="86" x2="535" y2="86" stroke="#333333" stroke-width="1"/>
+  <text x="485" y="86" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">CNF</text>
+  <text x="545" y="86" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">EVENT - Execution Confirmation</text>
+  <circle cx="500" cy="103" r="5" fill="#4ECDC4" stroke="#333333" stroke-width="1"/>
+  <line x1="505" y1="103" x2="535" y2="103" stroke="#333333" stroke-width="1"/>
+  <text x="485" y="103" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">OUT</text>
+  <text x="545" y="103" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">INT</text>
+</svg>

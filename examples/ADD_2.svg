@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="750" height="215" xmlns="http://www.w3.org/2000/svg">
+  <rect x="250" y="50" width="250" height="115" rx="10" ry="10" fill="#F1F1F1" stroke="#333333" stroke-width="2"/>
+  <text x="375" y="107" text-anchor="middle" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">ADD_2</text>
+  <circle cx="250" cy="88" r="5" fill="#FF6B6B" stroke="#333333" stroke-width="1"/>
+  <line x1="245" y1="88" x2="215" y2="88" stroke="#333333" stroke-width="1"/>
+  <text x="205" y="88" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">Normal Execution Request - EVENT</text>
+  <text x="265" y="88" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">REQ</text>
+  <circle cx="250" cy="107" r="5" fill="#4ECDC4" stroke="#333333" stroke-width="1"/>
+  <line x1="245" y1="107" x2="215" y2="107" stroke="#333333" stroke-width="1"/>
+  <text x="205" y="107" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">ADD input 1 - ANY_MAGNITUDE</text>
+  <text x="265" y="107" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">IN1</text>
+  <circle cx="250" cy="126" r="5" fill="#4ECDC4" stroke="#333333" stroke-width="1"/>
+  <line x1="245" y1="126" x2="215" y2="126" stroke="#333333" stroke-width="1"/>
+  <text x="205" y="126" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">ADD input 2 - ANY_MAGNITUDE</text>
+  <text x="265" y="126" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">IN2</text>
+  <circle cx="500" cy="95" r="5" fill="#FF6B6B" stroke="#333333" stroke-width="1"/>
+  <line x1="505" y1="95" x2="535" y2="95" stroke="#333333" stroke-width="1"/>
+  <text x="485" y="95" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">CNF</text>
+  <text x="545" y="95" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">EVENT - Execution Confirmation</text>
+  <circle cx="500" cy="120" r="5" fill="#4ECDC4" stroke="#333333" stroke-width="1"/>
+  <line x1="505" y1="120" x2="535" y2="120" stroke="#333333" stroke-width="1"/>
+  <text x="485" y="120" text-anchor="end" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">OUT</text>
+  <text x="545" y="120" text-anchor="start" dominant-baseline="middle" font-size="12" fill="#000000" font-family="Arial">ANY_MAGNITUDE - ADD result</text>
+</svg>

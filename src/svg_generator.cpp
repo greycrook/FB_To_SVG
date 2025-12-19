@@ -8,8 +8,7 @@ void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool
                   const std::string& comment, int rectX, int rectY, int blockHeight, 
                   int cfgWidth, const Config& cfg) {
     
-    int yPos = rectY + cfg.margin + 
-               (blockHeight - 2 * cfg.margin) * (index + 1) / (totalPorts + 1);
+    int yPos = rectY + cfg.margin + (blockHeight - 2 * cfg.margin) * (index + 1) / (totalPorts + 1);
     
     int circleX;
     if (isLeft) {
@@ -20,14 +19,13 @@ void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool
     
     std::string portColor = isEvent ? cfg.eventPortColor : cfg.dataPortColor;
     
-    // Кружок порта
     svg += "  <circle cx=\"" + std::to_string(circleX) + 
            "\" cy=\"" + std::to_string(yPos) + 
            "\" r=\"" + std::to_string(cfg.portRadius) + 
            "\" fill=\"" + portColor + 
            "\" stroke=\"" + cfg.borderColor + "\" stroke-width=\"1\"/>\n";
     
-    // Горизонтальная линия (30px) ВНЕ БЛОКА
+    
     int lineStartX, lineEndX;
     int lineLength = 30;
     if (isLeft) {
@@ -44,9 +42,7 @@ void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool
            "\" y2=\"" + std::to_string(yPos) + 
            "\" stroke=\"" + cfg.borderColor + "\" stroke-width=\"1\"/>\n";
     
-    // Текст порта
     if (isLeft) {
-        // ВХОДНЫЕ СЛЕВА
         std::string leftText;
         if (!comment.empty()) {
             leftText = comment + " - " + portType;
@@ -62,7 +58,6 @@ void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool
                std::to_string(cfg.textSize) + "\" fill=\"" + cfg.textColor + 
                "\" font-family=\"Arial\">" + leftText + "</text>\n";
         
-        // Название порта внутри блока
         svg += "  <text x=\"" + std::to_string(circleX + 15) + 
                "\" y=\"" + std::to_string(yPos) + 
                "\" text-anchor=\"start\" dominant-baseline=\"middle\" font-size=\"" + 
@@ -70,15 +65,12 @@ void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool
                "\" font-family=\"Arial\">" + portName + "</text>\n";
             
     } else {
-        // ВЫХОДНЫЕ СПРАВА
-        // Название порта внутри блока
         svg += "  <text x=\"" + std::to_string(circleX - 15) + 
                "\" y=\"" + std::to_string(yPos) + 
                "\" text-anchor=\"end\" dominant-baseline=\"middle\" font-size=\"" + 
                std::to_string(cfg.textSize) + "\" fill=\"" + cfg.textColor + 
                "\" font-family=\"Arial\">" + portName + "</text>\n";
         
-        // Текст справа
         std::string rightText;
         if (!comment.empty()) {
             rightText = portType + " - " + comment;
