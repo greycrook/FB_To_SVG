@@ -70,3 +70,7 @@ FuncBlock* parseFuncBlock(const std::string& filename)
     
     return fbType;
 }
+
+void freeFBType(FuncBlock* fbType) {
+    delete fbType;
+}
