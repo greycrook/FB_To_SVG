@@ -22,17 +22,22 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
     int blockHeight = cfg.margin * 2 + maxPorts * cfg.portSpacing;
     blockHeight = std::max(blockHeight, cfg.height); // Не меньше минимальной
     
-    // Ширина SVG с запасом для текста
-    int svgWidth = cfg.width + 400;
+    // Увеличим ширину SVG, чтобы текст помещался с обеих сторон
+    // Левая часть для текста входных портов: примерно 250px
+    // Правая часть для текста выходных портов: примерно 250px
+    // Плюс сам блок 250px + отступы
+    int svgWidth = 250 + cfg.width + 250; // 250 слева + блок + 250 справа
     int svgHeight = blockHeight + 100;
+    
+    // Центрируем блок на холсте
+    int rectX = 250; // Сдвигаем блок вправо, чтобы слева было место для текста
+    int rectY = 50;
     
     svg << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     svg << "<svg width=\"" << svgWidth << "\" height=\"" << svgHeight 
         << "\" xmlns=\"http://www.w3.org/2000/svg\">\n";
     
     // Основной прямоугольник блока
-    int rectX = 200;
-    int rectY = 50;
     svg << "  <rect x=\"" << rectX << "\" y=\"" << rectY << "\" width=\"" 
         << cfg.width << "\" height=\"" << blockHeight << "\" rx=\"10\" ry=\"10\" fill=\"" 
         << cfg.blockColor << "\" stroke=\"" << cfg.borderColor << "\" stroke-width=\"2\"/>\n";
@@ -64,16 +69,17 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
             << cfg.portRadius << "\" fill=\"" << portColor << "\" stroke=\"" 
             << cfg.borderColor << "\" stroke-width=\"1\"/>\n";
         
-        // Горизонтальная линия (20px) ВНЕ БЛОКА
+        // Горизонтальная линия (30px) ВНЕ БЛОКА - немного длиннее
         int lineStartX, lineEndX;
+        int lineLength = 30; // Увеличил длину линии
         if (isLeft) {
             // Для входных: линия идет ВЛЕВО от кружка (за пределы блока)
             lineStartX = circleX - cfg.portRadius;
-            lineEndX = lineStartX - 20; // Линия наружу
+            lineEndX = lineStartX - lineLength;
         } else {
             // Для выходных: линия идет ВПРАВО от кружка (за пределы блока)
             lineStartX = circleX + cfg.portRadius;
-            lineEndX = lineStartX + 20; // Линия наружу
+            lineEndX = lineStartX + lineLength;
         }
         
         svg << "  <line x1=\"" << lineStartX << "\" y1=\"" << yPos << "\" x2=\"" 
@@ -83,7 +89,7 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
         // Текст порта
         if (isLeft) {
             // ВХОДНЫЕ СЛЕВА: комментарий - тип данных [линия ВНЕ БЛОКА] [кружок] название порта
-            // 1. Текст слева от линии (комментарий - тип)
+            // 1. Текст слева от линии (комментарий - тип) - больше места слева
             std::string leftText;
             if (!comment.empty()) {
                 leftText = comment + " - " + portType;
@@ -91,7 +97,10 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
                 leftText = portType;
             }
             
-            svg << "  <text x=\"" << (lineEndX - 5) << "\" y=\"" << yPos 
+            // Текст выравниваем по правому краю, ставим еще левее
+            int textLeftX = lineEndX - 10; // Отступ от конца линии
+            
+            svg << "  <text x=\"" << textLeftX << "\" y=\"" << yPos 
                 << "\" text-anchor=\"end\" dominant-baseline=\"middle\" font-size=\"" 
                 << cfg.textSize << "\" fill=\"" << cfg.textColor << "\" font-family=\"Arial\">"
                 << leftText << "</text>\n";
@@ -110,7 +119,7 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
                 << cfg.textSize << "\" fill=\"" << cfg.textColor << "\" font-family=\"Arial\">"
                 << portName << "</text>\n";
             
-            // 2. Текст справа от линии (тип - комментарий)
+            // 2. Текст справа от линии (тип - комментарий) - больше места справа
             std::string rightText;
             if (!comment.empty()) {
                 rightText = portType + " - " + comment;
@@ -118,7 +127,10 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
                 rightText = portType;
             }
             
-            svg << "  <text x=\"" << (lineEndX + 5) << "\" y=\"" << yPos 
+            // Текст выравниваем по левому краю, ставим еще правее
+            int textRightX = lineEndX + 10; // Отступ от конца линии
+            
+            svg << "  <text x=\"" << textRightX << "\" y=\"" << yPos 
                 << "\" text-anchor=\"start\" dominant-baseline=\"middle\" font-size=\"" 
                 << cfg.textSize << "\" fill=\"" << cfg.textColor << "\" font-family=\"Arial\">"
                 << rightText << "</text>\n";
