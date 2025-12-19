@@ -3,20 +3,21 @@
 #include <algorithm>
 #include <fstream>
 
-// Вспомогательная функция для добавления порта
 void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool isEvent,
                   const std::string& portName, const std::string& portType, 
                   const std::string& comment, int rectX, int rectY, int blockHeight, 
                   int cfgWidth, const Config& cfg) {
     
-    // Координата Y порта
     int yPos = rectY + cfg.margin + 
                (blockHeight - 2 * cfg.margin) * (index + 1) / (totalPorts + 1);
     
-    // Координата X кружка на границе
-    int circleX = isLeft ? rectX : rectX + cfgWidth;
+    int circleX;
+    if (isLeft) {
+        circleX = rectX;
+    } else {
+        circleX = rectX + cfgWidth;
+    }
     
-    // Цвет кружка
     std::string portColor = isEvent ? cfg.eventPortColor : cfg.dataPortColor;
     
     // Кружок порта
@@ -98,34 +99,24 @@ void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool
 std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
     if (!fbType) return "";
     
-    // Рассчитаем общее количество портов с каждой стороны
     int leftPortsCount = fbType->eventInputs.size() + fbType->inputVars.size();
     int rightPortsCount = fbType->eventOutputs.size() + fbType->outputVars.size();
     
-    // Если нет портов с какой-то стороны, используем минимум 1 для расчетов
-    int calcPortsLeft = std::max(leftPortsCount, 1);
-    int calcPortsRight = std::max(rightPortsCount, 1);
-    int maxPorts = std::max(calcPortsLeft, calcPortsRight);
+    int maxPorts = std::max(leftPortsCount, rightPortsCount);
     
-    // Высота блока зависит от максимального количества портов
     int blockHeight = cfg.margin * 2 + maxPorts * cfg.portSpacing;
-    if (blockHeight < cfg.height) blockHeight = cfg.height;
     
-    // Размеры холста
     int svgWidth = 250 + cfg.width + 250;
     int svgHeight = blockHeight + 100;
     
-    // Центрируем блок на холсте
     int rectX = 250;
     int rectY = 50;
     
-    // Начинаем формировать SVG
     std::string svg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
     svg += "<svg width=\"" + std::to_string(svgWidth) + 
            "\" height=\"" + std::to_string(svgHeight) + 
            "\" xmlns=\"http://www.w3.org/2000/svg\">\n";
     
-    // Основной прямоугольник блока
     svg += "  <rect x=\"" + std::to_string(rectX) + 
            "\" y=\"" + std::to_string(rectY) + 
            "\" width=\"" + std::to_string(cfg.width) + 
@@ -133,7 +124,6 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
            "\" rx=\"10\" ry=\"10\" fill=\"" + cfg.blockColor + 
            "\" stroke=\"" + cfg.borderColor + "\" stroke-width=\"2\"/>\n";
     
-    // Название блока в центре
     int textX = rectX + cfg.width / 2;
     int textY = rectY + blockHeight / 2;
     svg += "  <text x=\"" + std::to_string(textX) + 
@@ -142,11 +132,9 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
            std::to_string(cfg.textSize) + "\" fill=\"" + cfg.textColor + 
            "\" font-family=\"Arial\">" + fbType->name + "</text>\n";
     
-    // Добавляем входные порты (слева)
     int portIndex = 0;
     
-    // EventInputs сначала
-    for (size_t i = 0; i < fbType->eventInputs.size(); i++) {
+    for (int i = 0; i < fbType->eventInputs.size(); i++) {
         const Event& event = fbType->eventInputs[i];
         addPortToSVG(svg, portIndex, leftPortsCount, true, true,
                     event.name, "EVENT", event.comment,
@@ -154,8 +142,7 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
         portIndex++;
     }
     
-    // InputVars после
-    for (size_t i = 0; i < fbType->inputVars.size(); i++) {
+    for (int i = 0; i < fbType->inputVars.size(); i++) {
         const PortData& var = fbType->inputVars[i];
         addPortToSVG(svg, portIndex, leftPortsCount, true, false,
                     var.name, var.type, var.comment,
@@ -163,11 +150,9 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
         portIndex++;
     }
     
-    // Добавляем выходные порты (справа)
     portIndex = 0;
     
-    // EventOutputs сначала
-    for (size_t i = 0; i < fbType->eventOutputs.size(); i++) {
+    for (int i = 0; i < fbType->eventOutputs.size(); i++) {
         const Event& event = fbType->eventOutputs[i];
         addPortToSVG(svg, portIndex, rightPortsCount, false, true,
                     event.name, "EVENT", event.comment,
@@ -175,8 +160,7 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
         portIndex++;
     }
     
-    // OutputVars после
-    for (size_t i = 0; i < fbType->outputVars.size(); i++) {
+    for (int i = 0; i < fbType->outputVars.size(); i++) {
         const PortData& var = fbType->outputVars[i];
         addPortToSVG(svg, portIndex, rightPortsCount, false, false,
                     var.name, var.type, var.comment,
