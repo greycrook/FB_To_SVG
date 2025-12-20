@@ -105,7 +105,7 @@ std::string generateSVG(const FuncBlock* fbType, const Config& cfg) {
     
     int blockHeight = cfg.margin * 2 + maxPorts * cfg.portSpacing;
     
-    int svgWidth = 250 + cfg.width + 250;
+    int svgWidth = 350 + cfg.width + 350;
     int svgHeight = blockHeight + 100;
     
     int rectX = 250;
