@@ -17,8 +17,15 @@ void addPortToSVG(std::string& svg, int index, int totalPorts, bool isLeft, bool
         circleX = rectX + cfgWidth;
     }
     
-    std::string portColor = isEvent ? cfg.eventPortColor : cfg.dataPortColor;
-    
+    std::string portColor;
+    if (isEvent) {
+        portColor = cfg.eventPortColor;
+    }
+    else {
+        portColor = cfg.dataPortColor;
+    }
+
+
     svg += "  <circle cx=\"" + std::to_string(circleX) + 
            "\" cy=\"" + std::to_string(yPos) + 
            "\" r=\"" + std::to_string(cfg.portRadius) + 
